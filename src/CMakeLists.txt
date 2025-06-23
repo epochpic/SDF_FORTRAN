@@ -41,7 +41,8 @@ set(SOURCES
    sdf_md5.f90
 )
 
-if(MPI_Fortran_HAVE_F08_MODULE)
+option(USE_MPI_F08 "Compile with MPI Fortran 2008 interfaces, if possible" ON)
+if(USE_MPI_F08 AND MPI_Fortran_HAVE_F08_MODULE)
     list(APPEND SOURCES sdf_f08.f90)
 endif()
 
