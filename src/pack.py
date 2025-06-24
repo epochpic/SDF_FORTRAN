@@ -386,7 +386,11 @@ if pack_git_diff:
     if pack_git_diff_from_origin:
         branch = args.diff_branch
 
-    stat = sp.check_output([args.git, "diff", "--stat", branch], shell=False)
+    got_branch = sp.run([args.git, "show-ref", "--quiet", branch])
+    if got_branch.returncode == 0:
+        stat = sp.check_output([args.git, "diff", "--stat", branch], shell=False)
+    else:
+        stat = ""
 
     if len(stat) == 0:
         pack_git_diff = False
