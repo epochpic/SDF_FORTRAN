@@ -2,7 +2,7 @@ MODULE sdf_f08
 
   USE mpi_f08_types
   USE sdf_common
-  USE sdf_control, sdf_open_f90 => sdf_open
+  USE sdf_control, ONLY : sdf_open_f90 => sdf_open, sdf_close
   USE sdf_output_ru
   USE sdf_output_cartesian_r8
 
