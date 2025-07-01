@@ -433,7 +433,7 @@ else:
         bname = bname.decode('ascii').rstrip()
         bnames = bname.split('/', 2)
         bname = bnames[-1]
-        if bnames[1] == 'remotes':
+        if len(bnames) > 1 and bnames[1] == 'remotes':
             remote = bname.split('/')[0]
             sremote = "remote"
 
