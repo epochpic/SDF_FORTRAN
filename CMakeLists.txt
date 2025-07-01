@@ -6,7 +6,17 @@ find_package(PackSDF REQUIRED PATHS CMake NO_DEFAULT_PATH)
 include(CMake/CheckMPIVersion.cmake)
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "PGI")
-  set(CPU "" CACHE STRING "Which CPU? (see pgf90 man page for options)")
+  set(CPU "" CACHE STRING "Which CPU? (see pgfortran man page for options)")
+  if(CPU)
+     set(CPU "-tp ${CPU}")
+  endif()
+
+  set(CMAKE_Fortran_FLAGS "-g -Mnodefaultunit -Ktrap=fp -mcmodel=medium -Mdclchk -Mnofma ${CPU} ${MPI_Fortran_COMPILE_FLAGS}")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-O2 -g -Mvect -Munroll")
+  set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -Mbounds -Mdepchk -Mstandard -C")
+
+elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL "NVHPC")
+  set(CPU "" CACHE STRING "Which CPU? (see nvfortran man page for options)")
   if(CPU)
      set(CPU "-tp ${CPU}")
   endif()
