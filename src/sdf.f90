@@ -107,6 +107,7 @@ MODULE sdf
   PUBLIC :: sdf_md5_init
   PUBLIC :: sdf_md5_generate
   PUBLIC :: sdf_md5_append
+  PUBLIC :: sdf_md5_generate_bytes
 
   PUBLIC :: sdf_open
   PUBLIC :: sdf_close

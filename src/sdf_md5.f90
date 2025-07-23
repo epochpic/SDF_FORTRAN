@@ -55,6 +55,20 @@ CONTAINS
 
 
 
+  FUNCTION sdf_md5_generate_bytes(string) RESULT(bytes)
+
+    CHARACTER(LEN=32) :: md5
+    CHARACTER(LEN=*), INTENT(IN) :: string
+    INTEGER(i4) :: bytes(4)
+
+    CALL sdf_md5_init
+
+    CALL md5_calculate_bytes(string, bytes, .TRUE.)
+
+  END FUNCTION sdf_md5_generate_bytes
+
+
+
   FUNCTION sdf_md5_append(string) RESULT(md5)
 
     CHARACTER(LEN=32) :: md5
@@ -66,14 +80,14 @@ CONTAINS
 
 
 
-  SUBROUTINE md5_calculate(string, md5, generate)
+  SUBROUTINE md5_calculate_bytes(string, bytes, generate)
 
     CHARACTER(LEN=*), INTENT(IN) :: string
-    CHARACTER(LEN=32), INTENT(INOUT) :: md5
-    LOGICAL, INTENT(IN) :: generate
+    INTEGER(i4), INTENT(OUT) :: bytes(4)
+    LOGICAL, INTENT(IN), OPTIONAL :: generate
     CHARACTER(LEN=LEN(string)+72) :: new_string
     CHARACTER(LEN=8) :: wtmp
-    LOGICAL :: pad_string
+    LOGICAL :: pad_string, gen
 
     INTEGER(i4) :: j, n1, n2, n3, n4, pos, new_len
     INTEGER(i4) :: a, b, c, d, f, g, temp
@@ -101,7 +115,12 @@ CONTAINS
     new_len = LEN(string)
     new_string(:new_len) = string
 
-    IF (generate) THEN
+    gen = .TRUE.
+    IF (PRESENT(generate)) THEN
+      IF (.NOT.generate) gen = .FALSE.
+    END IF
+
+    IF (gen) THEN
       pad_string = .TRUE.
     ELSE
       pad_string = (new_len == 0 .OR. MOD(new_len, 64) /= 0)
@@ -181,19 +200,32 @@ CONTAINS
       h3 = h3 + d
     END DO
 
-    a = to_bytes(h0)
-    b = to_bytes(h1)
-    c = to_bytes(h2)
-    d = to_bytes(h3)
+    bytes(1) = to_bytes(h0)
+    bytes(2) = to_bytes(h1)
+    bytes(3) = to_bytes(h2)
+    bytes(4) = to_bytes(h3)
 
-    WRITE(md5,'(4(z8.8))') a, b, c, d
+  END SUBROUTINE md5_calculate_bytes
+
+
+
+  SUBROUTINE md5_calculate(string, md5, generate)
+
+    CHARACTER(LEN=*), INTENT(IN) :: string
+    CHARACTER(LEN=32), INTENT(INOUT) :: md5
+    LOGICAL, INTENT(IN) :: generate
+    INTEGER(i4) :: bytes(4)
+
+    CALL md5_calculate_bytes(string, bytes, generate)
+
+    WRITE(md5,'(4(z8.8))') bytes
     CALL lowercase(md5)
 
     IF (generate) THEN
-      h0 = a
-      h1 = b
-      h2 = c
-      h3 = d
+      h0 = bytes(1)
+      h1 = bytes(2)
+      h2 = bytes(3)
+      h3 = bytes(4)
     END IF
 
   END SUBROUTINE md5_calculate
