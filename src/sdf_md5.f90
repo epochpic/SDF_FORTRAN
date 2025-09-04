@@ -57,7 +57,6 @@ CONTAINS
 
   FUNCTION sdf_md5_generate_bytes(string) RESULT(bytes)
 
-    CHARACTER(LEN=32) :: md5
     CHARACTER(LEN=*), INTENT(IN) :: string
     INTEGER(i4) :: bytes(4)
 
