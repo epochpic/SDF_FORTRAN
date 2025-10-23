@@ -504,7 +504,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_INTEGER4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h, dims)
@@ -535,7 +535,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_INTEGER4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h, dims)
@@ -566,7 +566,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_INTEGER8)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h, dims)
@@ -598,7 +598,7 @@ CONTAINS
     INTEGER :: errcode, i, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_CHARACTER)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h, dims)
@@ -641,7 +641,7 @@ CONTAINS
     INTEGER :: errcode, i, n1, n2
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_CHARACTER)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h, dims)
@@ -702,7 +702,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_INTEGER8)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_cpu_split_info(h)
@@ -733,7 +733,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_INTEGER4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_cpu_split_info(h)
@@ -1480,10 +1480,11 @@ CONTAINS
 
 
 
-  FUNCTION sdf_check_block_header(h) RESULT(error)
+  FUNCTION sdf_check_block_header(h, mpitype) RESULT(error)
 
     LOGICAL :: error
     TYPE(sdf_file_handle) :: h
+    INTEGER, INTENT(IN), OPTIONAL :: mpitype
 
     IF (.NOT. ASSOCIATED(h%current_block)) THEN
       IF (h%print_errors .AND. h%rank == h%rank_master) THEN
@@ -1493,6 +1494,18 @@ CONTAINS
       h%error_code = c_err_sdf
       error = .TRUE.
       RETURN
+    END IF
+
+    IF (PRESENT(mpitype)) THEN
+      IF (h%current_block%mpitype /= mpitype) THEN
+        IF (h%print_errors .AND. h%rank == h%rank_master) THEN
+          PRINT*,'*** ERROR ***'
+          PRINT*,'SDF block has incorrect datatype. Ignoring call.'
+        END IF
+        h%error_code = c_err_sdf
+        error = .TRUE.
+        RETURN
+      END IF
     END IF
 
     error = .FALSE.

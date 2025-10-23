@@ -57,7 +57,7 @@ CONTAINS
     INTEGER :: errcode, npoints
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL read_point_mesh_info_ru(h)
@@ -90,7 +90,7 @@ CONTAINS
     INTEGER :: errcode, npoints
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL read_point_mesh_info_ru(h)
@@ -130,7 +130,7 @@ CONTAINS
     INTEGER :: errcode, npoints
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL read_point_mesh_info_ru(h)
@@ -195,7 +195,7 @@ CONTAINS
       END FUNCTION iterator
     END INTERFACE
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL read_point_mesh_info_ru(h)
@@ -285,7 +285,7 @@ CONTAINS
       END FUNCTION iterator
     END INTERFACE
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL read_point_variable_info_ru(h)
@@ -334,7 +334,7 @@ CONTAINS
     INTEGER :: errcode, npoints
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL read_point_variable_info_ru(h)

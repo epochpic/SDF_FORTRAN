@@ -68,7 +68,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h)
@@ -99,7 +99,7 @@ CONTAINS
     INTEGER :: errcode
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h)
@@ -134,7 +134,7 @@ CONTAINS
     INTEGER, DIMENSION(ndims) :: starts, sizes, subsizes
     LOGICAL :: not_this_processor
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     not_this_processor = .FALSE.
     IF (PRESENT(null_proc)) THEN
@@ -184,7 +184,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h)
@@ -215,7 +215,7 @@ CONTAINS
     INTEGER :: errcode
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h)
@@ -250,7 +250,7 @@ CONTAINS
     INTEGER, DIMENSION(ndims) :: starts, sizes, subsizes
     LOGICAL :: not_this_processor
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     not_this_processor = .FALSE.
     IF (PRESENT(null_proc)) THEN
@@ -300,7 +300,7 @@ CONTAINS
     INTEGER :: errcode, n1
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h)
@@ -331,7 +331,7 @@ CONTAINS
     INTEGER :: errcode
     TYPE(sdf_block_type), POINTER :: b
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     b => h%current_block
     IF (.NOT. b%done_info) CALL sdf_read_array_info(h)
@@ -366,7 +366,7 @@ CONTAINS
     INTEGER, DIMENSION(ndims) :: starts, sizes, subsizes
     LOGICAL :: not_this_processor
 
-    IF (sdf_check_block_header(h)) RETURN
+    IF (sdf_check_block_header(h, MPI_REAL4)) RETURN
 
     not_this_processor = .FALSE.
     IF (PRESENT(null_proc)) THEN
