@@ -66,10 +66,7 @@ set(PACK_OPTS sdf ${PACK_SOURCE_CODE} ${PACK_GIT_DIFF}
 include(${CONFIGURE_PACK_TARGET})
 list(APPEND SOURCES ${INFO_FILE})
 
-set(MCMODEL "-mcmodel=medium")
-if(APPLE)
-  set(MCMODEL " ")
-endif()
+set(MCMODEL " ")
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU")
    set(INFO_FLAGS "-Wno-conversion -fno-range-check")
