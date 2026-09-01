@@ -44,7 +44,6 @@ if(TARGET)
        BYPRODUCTS ${INFO_FILE}
        COMMAND ${CMAKE_COMMAND} -E remove -f ${FORT}
        COMMAND ${CMAKE_COMMAND} -P pack.cmake
-       DEPENDS ${PACK_PY} pack.cmake ${SOURCE_ALL}
        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
        VERBATIM)
 else()
