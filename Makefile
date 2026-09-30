@@ -79,7 +79,7 @@ endif
 # gfortran
 # ========
 ifeq ($(strip $(COMPILER)),gfortran)
-  FFLAGS = -O3 -g
+  FFLAGS = -O3 -g -fallow-argument-mismatch
   ifeq (debug,$(findstring debug,$(MODE)))
     FFLAGS = -O0 -g -Wall -Wextra -pedantic -fbounds-check \
              -ffpe-trap=invalid,zero,overflow -Wno-unused-parameter \
