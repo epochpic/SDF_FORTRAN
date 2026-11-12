@@ -353,6 +353,22 @@ print_character('compiler_info', compiler_info)
 print_character('compiler_flags', compiler_flags)
 print_integer('compile_date', compile_date)
 
+
+if pack_git_diff:
+    branch = 'HEAD'
+    if pack_git_diff_from_origin:
+        branch = args.diff_branch
+
+    got_branch = sp.run([args.git, "show-ref", "--quiet", branch])
+    if got_branch.returncode == 0:
+        stat = sp.check_output([args.git, "diff", "--stat", branch], shell=False)
+    else:
+        stat = ""
+
+    if len(stat) == 0:
+        pack_git_diff = False
+
+
 if pack_source_code or pack_git_diff:
     if f77_output:
         of.write(linestart + "INTEGER i\n\n")
@@ -379,21 +395,6 @@ else:
     mimetype = 'application/x-tar-gz'
 
     write_data_bytes(archive, vname)
-
-
-if pack_git_diff:
-    branch = 'HEAD'
-    if pack_git_diff_from_origin:
-        branch = args.diff_branch
-
-    got_branch = sp.run([args.git, "show-ref", "--quiet", branch])
-    if got_branch.returncode == 0:
-        stat = sp.check_output([args.git, "diff", "--stat", branch], shell=False)
-    else:
-        stat = ""
-
-    if len(stat) == 0:
-        pack_git_diff = False
 
 
 vname = diffname

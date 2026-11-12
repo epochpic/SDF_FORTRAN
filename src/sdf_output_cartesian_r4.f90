@@ -623,6 +623,8 @@ CONTAINS
       b%type_size = sof
       b%datatype = datatype_real
       b%mpitype = mpitype_real
+      sz = 0
+      ALLOCATE(r4array(0))
     END IF
 
     IF (PRESENT(geometry)) THEN
@@ -689,7 +691,6 @@ CONTAINS
       r4array(1:intn) = REAL(z(1:intn),r4)
       CALL MPI_FILE_WRITE_ALL(h%filehandle, r4array, 1, subarray(3), &
           MPI_STATUS_IGNORE, errcode)
-      DEALLOCATE(r4array)
     ELSE
       CALL MPI_FILE_WRITE_ALL(h%filehandle, z, 1, subarray(3), &
           MPI_STATUS_IGNORE, errcode)

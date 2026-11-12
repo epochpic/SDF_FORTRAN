@@ -722,9 +722,9 @@ CONTAINS
         b%data_length = 0
         b%blocktype = c_blocktype_stitched_tensor
       END IF
+      b%datatype = c_datatype_other
     END IF
 
-    b%datatype = c_datatype_other
 
     CALL write_stitched(h, id, name, mesh_id, stagger, variable_ids, ndims, &
         data_length)

@@ -809,7 +809,6 @@ CONTAINS
   SUBROUTINE write_nospec_srl_1d_pt_mesh_i8_r8(h, id, name, x, &
       npoint_global, dim_labels, dim_units, dim_mults)
 
-    INTEGER, PARAMETER :: ndims = 1
     TYPE(sdf_file_handle) :: h
     CHARACTER(LEN=*), INTENT(IN) :: id, name
     REAL(r8), DIMENSION(:), INTENT(IN) :: x
@@ -827,7 +826,6 @@ CONTAINS
   SUBROUTINE write_nospec_srl_2d_pt_mesh_i8_r8(h, id, name, x, y, &
       npoint_global, dim_labels, dim_units, dim_mults)
 
-    INTEGER, PARAMETER :: ndims = 2
     TYPE(sdf_file_handle) :: h
     CHARACTER(LEN=*), INTENT(IN) :: id, name
     REAL(r8), DIMENSION(:), INTENT(IN) :: x, y
@@ -845,7 +843,6 @@ CONTAINS
   SUBROUTINE write_nospec_srl_3d_pt_mesh_i8_r8(h, id, name, x, y, z, &
       npoint_global, dim_labels, dim_units, dim_mults)
 
-    INTEGER, PARAMETER :: ndims = 3
     TYPE(sdf_file_handle) :: h
     CHARACTER(LEN=*), INTENT(IN) :: id, name
     REAL(r8), DIMENSION(:), INTENT(IN) :: x, y, z

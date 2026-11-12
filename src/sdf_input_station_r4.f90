@@ -29,6 +29,8 @@ CONTAINS
     INTEGER(i8) :: bstart, bstop
     REAL(r8), DIMENSION(:), ALLOCATABLE :: r8array
 
+    time = HUGE(0.0_r4)
+
     IF (sdf_check_block_header(h)) RETURN
 
     b => h%current_block
